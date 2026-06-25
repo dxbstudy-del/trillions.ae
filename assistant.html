@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Assistant | Trillions</title>
+  <meta name="description" content="Chat with the Trillions AI assistant for sourcing and product inquiry guidance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a><button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav"><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a><a href="assistant.html">AI Assistant</a><a href="contact.html" class="nav-cta">Contact</a></nav></div></header>
+  <main>
+    <section class="page-hero"><div class="container narrow"><p class="eyebrow">AI Assistant</p><h1>Ask about sourcing, quotations, product requirements, and next steps.</h1><p>This page is prepared for a server-side OpenAI integration. The browser calls <code>/api/chat.php</code>; the API key stays on the server.</p></div></section>
+    <section class="section"><div class="container chat-shell">
+      <div id="chat-log" class="chat-log" aria-live="polite">
+        <div class="chat-message bot">Hello. I am the Trillions assistant. Tell me what product you want to source, your target quantity, destination market, and any supplier information you already have.</div>
+      </div>
+      <form id="chat-form" class="chat-form">
+        <input id="chat-input" type="text" placeholder="Example: I need to compare two supplier quotations for an RC car product" autocomplete="off" required>
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+      <p class="small">For production use, set the server environment variable <code>OPENAI_API_KEY</code> and keep API keys out of browser JavaScript.</p>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a><p>Global sourcing, trading, and private-label support for GCC-focused businesses.</p></div><div><h4>Company</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a></div><div><h4>Support</h4><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div></div></footer>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
