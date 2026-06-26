@@ -2,6 +2,8 @@ if (window.location.protocol === 'http:') {
   window.location.replace(`https://${window.location.host}${window.location.pathname}${window.location.search}${window.location.hash}`);
 }
 
+const CONTACT_EMAIL = 'info@trillions.ae';
+
 const navToggle = document.querySelector('.nav-toggle');
 const siteNav = document.querySelector('.site-nav');
 
@@ -17,14 +19,33 @@ if (contactForm) {
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const form = new FormData(contactForm);
-    const name = form.get('name') || '';
-    const email = form.get('email') || '';
-    const type = form.get('type') || '';
-    const message = form.get('message') || '';
-    const recipient = 'info@trillions.ae';
-    const subject = encodeURIComponent(`Trillions inquiry: ${type}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nInquiry type: ${type}\n\nMessage:\n${message}`);
-    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    const value = (name) => String(form.get(name) || '').trim();
+    const name = value('name');
+    const email = value('email');
+    const phone = value('phone');
+    const type = value('type');
+    const market = value('market');
+    const quantity = value('quantity');
+    const message = value('message');
+    const subject = encodeURIComponent(`Trillions ${type || 'sourcing'} inquiry from ${name || 'website visitor'}`);
+    const body = encodeURIComponent([
+      'Hello Trillions team,',
+      '',
+      'I would like support with the following inquiry:',
+      '',
+      `Name: ${name || 'Not provided'}`,
+      `Email: ${email || 'Not provided'}`,
+      `Phone or WhatsApp: ${phone || 'Not provided'}`,
+      `Inquiry type: ${type || 'Not provided'}`,
+      `Destination market: ${market || 'Not provided'}`,
+      `Target quantity: ${quantity || 'Not provided'}`,
+      '',
+      'Message:',
+      message || 'Not provided',
+      '',
+      'Thank you.'
+    ].join('\n'));
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   });
 }
 
@@ -56,10 +77,18 @@ if (chatForm && chatInput && chatLog) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message })
       });
-      const data = await response.json();
+      let data = {};
+      try {
+        data = await response.json();
+      } catch (error) {
+        data = {};
+      }
+      if (!response.ok) {
+        throw new Error(data.reply || 'The assistant is temporarily unavailable. Please try again later.');
+      }
       thinkingNode.textContent = data.reply || 'No response was returned.';
     } catch (error) {
-      thinkingNode.textContent = 'The assistant is not connected yet. Please configure /api/chat.php and the OPENAI_API_KEY server variable.';
+      thinkingNode.textContent = error.message || 'The assistant is temporarily unavailable. Please try again later.';
     }
   });
 }
