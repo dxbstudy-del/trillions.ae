@@ -67,6 +67,17 @@ if (contactForm) {
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 const chatLog = document.getElementById('chat-log');
+const promptButtons = document.querySelectorAll('[data-chat-prompt]');
+
+if (chatInput && promptButtons.length) {
+  promptButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      chatInput.value = button.dataset.chatPrompt || '';
+      chatInput.focus();
+      chatInput.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+  });
+}
 
 function appendMessage(text, role) {
   const div = document.createElement('div');
@@ -83,7 +94,7 @@ if (chatForm && chatInput && chatLog) {
     if (!message) return;
     appendMessage(message, 'user');
     chatInput.value = '';
-    appendMessage('Thinking...', 'bot');
+    appendMessage('Preparing...', 'bot');
     const thinkingNode = chatLog.lastElementChild;
 
     try {
