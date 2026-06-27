@@ -20,7 +20,7 @@ if ($message === '') {
 
 $apiKey = getenv('OPENAI_API_KEY');
 if (!$apiKey) {
-    send_reply(503, 'The Trillions AI assistant is prepared but the server API key is not configured yet.');
+    send_reply(503, 'The Trillions AI assistant is temporarily unavailable. Please use the contact page to send your sourcing inquiry.');
 }
 
 $payload = [
@@ -28,7 +28,7 @@ $payload = [
     'messages' => [
         [
             'role' => 'system',
-            'content' => 'You are the Trillions website assistant. Help visitors with sourcing, supplier comparison, private label product development, product inquiry preparation, and GCC import planning. Do not give legal, financial, or compliance guarantees. Ask for product details, quantity, destination, target price, documents, and supplier information when needed.'
+            'content' => 'You are the Trillions website AI assistant for UAE and GCC sourcing inquiry preparation. Your main job is to help visitors create a stronger formal inquiry for Trillions. Help with product requirements, supplier quote review, supplier follow-up questions, private-label preparation, packaging questions, sample planning, document gaps, and GCC market considerations. If the visitor gives vague information, ask for the product/category, target quantity, destination country or city, target price or budget, supplier name or link, quotation terms, lead time, MOQ, documents, packaging needs, and timeline. When enough detail is available, produce a concise structured brief with these headings: Product or category, Buying target, Supplier or quote details, Missing information, Supplier follow-up questions, Recommended next step. Be clear that you cannot provide live quotations, guarantee supplier availability, verify factories or documents by yourself, approve compliance/customs/legal/tax matters, or replace formal quotation review, sample checks, or import coordination. Encourage visitors to send a formal inquiry to Trillions for verified review.'
         ],
         [
             'role' => 'user',
@@ -72,7 +72,7 @@ if ($status < 200 || $status >= 300) {
     }
 
     if (preg_match('/quota|billing|credit|insufficient|exceeded/i', $providerText)) {
-        send_reply(503, 'The AI assistant is online, but the AI service account needs credits or billing updated. Please use the contact form while this is fixed.');
+        send_reply(503, 'The Trillions AI assistant is temporarily unavailable. Please use the contact page to send your sourcing inquiry.');
     }
 
     send_reply(502, 'The assistant could not connect to the AI service right now. Please try again later.');

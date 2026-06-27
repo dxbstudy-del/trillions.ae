@@ -3,29 +3,144 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Assistant | Trillions</title>
-  <meta name="description" content="Chat with the Trillions AI assistant for sourcing and product inquiry guidance.">
+  <title>AI Assistant | Trillions Sourcing Inquiry Prep</title>
+  <meta name="description" content="Use the Trillions AI assistant to prepare better sourcing inquiries, supplier quote reviews, product ideas, and private-label requests for UAE and GCC buying support.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/assistant.css">
 </head>
-<body>
-  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a><button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav"><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a><a href="assistant.html">AI Assistant</a><a href="contact.html" class="nav-cta">Contact</a></nav></div></header>
+<body class="assistant-page services-page">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Trillions home"><span class="brand-mark">T</span><span>Trillions</span></a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a><a href="assistant.html">AI Assistant</a><a href="contact.html" class="nav-cta">Contact</a></nav>
+    </div>
+  </header>
+
   <main>
-    <section class="page-hero"><div class="container narrow"><p class="eyebrow">AI Assistant</p><h1>Ask about sourcing, quotations, product requirements, and next steps.</h1><p>This page is prepared for a server-side OpenAI integration. The browser calls <code>/api/chat.php</code>; the API key stays on the server.</p></div></section>
-    <section class="section"><div class="container chat-shell">
-      <div id="chat-log" class="chat-log" aria-live="polite">
-        <div class="chat-message bot">Hello. I am the Trillions assistant. Tell me what product you want to source, your target quantity, destination market, and any supplier information you already have.</div>
+    <section class="page-hero services-hero assistant-hero">
+      <div class="container services-hero-grid">
+        <div>
+          <p class="eyebrow">AI Assistant</p>
+          <h1>Prepare a stronger sourcing inquiry before you contact suppliers.</h1>
+          <p>Use the assistant to organize product requirements, supplier quote questions, private-label details, and GCC market considerations before sending a formal inquiry to Trillions.</p>
+        </div>
+        <div class="services-hero-note">
+          <strong>Best result</strong>
+          <span>Share the product, target quantity, destination market, supplier name or link, quote details, target price, and any documents already received.</span>
+        </div>
       </div>
-      <form id="chat-form" class="chat-form">
-        <input id="chat-input" type="text" placeholder="Example: I need to compare two supplier quotations for an RC car product" autocomplete="off" required>
-        <button class="btn btn-primary" type="submit">Send</button>
-      </form>
-      <p class="small">For production use, set the server environment variable <code>OPENAI_API_KEY</code> and keep API keys out of browser JavaScript.</p>
-    </div></section>
+    </section>
+
+    <section class="section assistant-section">
+      <div class="container assistant-grid">
+        <div class="chat-shell assistant-chat">
+          <div class="assistant-chat-head">
+            <div>
+              <p class="eyebrow">Inquiry prep chat</p>
+              <h2>Ask for a sourcing brief, quote review, or supplier question list.</h2>
+            </div>
+            <a class="btn btn-secondary" href="contact.html">Send formal inquiry</a>
+          </div>
+
+          <div class="prompt-grid" aria-label="Suggested prompts">
+            <button type="button" class="prompt-card" data-chat-prompt="Help me prepare a sourcing inquiry. The product is [product], quantity is [quantity], destination is [country/city], and my target price is [price]. What details are missing before I contact suppliers?">
+              <strong>Prepare an inquiry</strong>
+              <span>Turn product details into a supplier-ready request.</span>
+            </button>
+            <button type="button" class="prompt-card" data-chat-prompt="I have a supplier quote for [product]. Help me compare it. The unit price is [price], MOQ is [quantity], lead time is [time], payment terms are [terms], and destination market is [market]. What should I ask next?">
+              <strong>Review a quote</strong>
+              <span>Find missing terms, documents, and follow-up questions.</span>
+            </button>
+            <button type="button" class="prompt-card" data-chat-prompt="I want to create a private-label product for the GCC market. The product is [product]. Help me list packaging, branding, sample, document, and supplier questions.">
+              <strong>Private label</strong>
+              <span>Shape branding, packaging, and sample requirements.</span>
+            </button>
+            <button type="button" class="prompt-card" data-chat-prompt="Help me turn this product idea into a clear sourcing brief: [describe idea]. The target buyer is [buyer], destination is [market], and my expected order quantity is [quantity].">
+              <strong>Product idea</strong>
+              <span>Clarify specs, buyer needs, and sourcing next steps.</span>
+            </button>
+          </div>
+
+          <div id="chat-log" class="chat-log" aria-live="polite">
+            <div class="chat-message bot">Hello. I can help you prepare a better sourcing inquiry for Trillions. Tell me the product, target quantity, destination market, target price, and any supplier quote or product link you already have. I can also help draft supplier questions and identify missing details.</div>
+          </div>
+
+          <form id="chat-form" class="chat-form">
+            <input id="chat-input" type="text" placeholder="Example: Help me review a supplier quote for 500 RC cars for the UAE market" autocomplete="off" required>
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+          <p class="small">AI guidance can help organize your request. For verified supplier review, live quotations, compliance checks, or import coordination, send a formal inquiry to Trillions.</p>
+        </div>
+
+        <aside class="assistant-panel">
+          <p class="eyebrow">What to include</p>
+          <h2>A stronger inquiry starts with clear inputs.</h2>
+          <div class="assistant-checklist">
+            <div><strong>Product evidence</strong><span>Photos, catalog page, model number, supplier link, or competitor example.</span></div>
+            <div><strong>Buying target</strong><span>Quantity, destination country or city, target price, and expected order timing.</span></div>
+            <div><strong>Supplier material</strong><span>Quotation, supplier name, MOQ, payment terms, lead time, warranty, and certificates.</span></div>
+            <div><strong>Market needs</strong><span>Packaging, logo, Arabic or English labels, after-sales expectations, and GCC readiness.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section alt assistant-boundaries">
+      <div class="container">
+        <div class="section-heading wide-heading">
+          <p class="eyebrow">What the assistant can and cannot do</p>
+          <h2>Useful for preparation, not a replacement for verified sourcing work.</h2>
+        </div>
+        <div class="assistant-boundary-grid">
+          <div class="assistant-boundary-card">
+            <h3>Can help with</h3>
+            <ul>
+              <li>Drafting a sourcing inquiry or supplier follow-up message.</li>
+              <li>Listing missing details in a quotation or product brief.</li>
+              <li>Preparing private-label, packaging, and sample questions.</li>
+              <li>Organizing a buyer brief for UAE and GCC market review.</li>
+            </ul>
+          </div>
+          <div class="assistant-boundary-card muted-card">
+            <h3>Cannot do</h3>
+            <ul>
+              <li>Guarantee live prices, supplier availability, or delivery timelines.</li>
+              <li>Verify a factory, license, certificate, or product claim by itself.</li>
+              <li>Provide legal, customs, tax, safety, or compliance approval.</li>
+              <li>Replace formal quotation review, sample checks, or import coordination.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cta-panel services-cta">
+        <div>
+          <p class="eyebrow">Ready for review</p>
+          <h2>Have the details prepared?</h2>
+          <p>Send your product idea, supplier quote, target quantity, destination market, and documents through the contact page so Trillions can review the next sourcing step.</p>
+        </div>
+        <a class="btn btn-primary" href="contact.html">Start an inquiry</a>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a><p>Global sourcing, trading, and private-label support for GCC-focused businesses.</p></div><div><h4>Company</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a></div><div><h4>Support</h4><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div></div></footer>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a>
+        <p>Global sourcing, trading, and private-label support for GCC-focused businesses.</p>
+        <p>Email: <a href="mailto:info@trillions.ae">info@trillions.ae</a></p>
+      </div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a></div>
+      <div><h4>Support</h4><a href="contact.html">Contact</a><a href="mailto:info@trillions.ae">info@trillions.ae</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div>
+    </div>
+  </footer>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
