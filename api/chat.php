@@ -20,7 +20,7 @@ if ($message === '') {
 
 $apiKey = getenv('OPENAI_API_KEY');
 if (!$apiKey) {
-    send_reply(503, 'The Trillions AI assistant is prepared but the server API key is not configured yet.');
+    send_reply(503, 'The Trillions AI assistant is temporarily unavailable. Please use the contact page to send your sourcing inquiry.');
 }
 
 $payload = [
@@ -72,7 +72,7 @@ if ($status < 200 || $status >= 300) {
     }
 
     if (preg_match('/quota|billing|credit|insufficient|exceeded/i', $providerText)) {
-        send_reply(503, 'The AI assistant is online, but the AI service account needs credits or billing updated. Please use the contact form while this is fixed.');
+        send_reply(503, 'The Trillions AI assistant is temporarily unavailable. Please use the contact page to send your sourcing inquiry.');
     }
 
     send_reply(502, 'The assistant could not connect to the AI service right now. Please try again later.');
