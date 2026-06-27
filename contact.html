@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contact | Trillions</title>
-  <meta name="description" content="Contact Trillions for sourcing, trading, private-label, and supplier comparison inquiries.">
+  <title>Contact | Trillions Sourcing Inquiry for UAE & GCC Buyers</title>
+  <meta name="description" content="Contact Trillions to send a sourcing inquiry, supplier quote, product idea, or private-label request for UAE and GCC buying support.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="contact-page">
+<body class="contact-page services-page">
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="index.html" aria-label="Trillions home"><span class="brand-mark">T</span><span>Trillions</span></a>
@@ -18,12 +18,19 @@
       <nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a><a href="assistant.html">AI Assistant</a><a href="contact.html" class="nav-cta">Contact</a></nav>
     </div>
   </header>
+
   <main>
-    <section class="page-hero">
-      <div class="container narrow">
-        <p class="eyebrow">Contact</p>
-        <h1>Send your product, supplier, or sourcing request.</h1>
-        <p>Share the product details, quantity, target market, or supplier quote you already have. The form prepares a structured email so you can review it before sending.</p>
+    <section class="page-hero services-hero">
+      <div class="container services-hero-grid">
+        <div>
+          <p class="eyebrow">Contact Trillions</p>
+          <h1>Send a sourcing request that is ready to review.</h1>
+          <p>Share a product idea, supplier quote, category brief, or private-label request. The form prepares a structured email so Trillions can understand the product, quantity, market, and next step.</p>
+        </div>
+        <div class="services-hero-note">
+          <strong>Best starting point</strong>
+          <span>Include photos or links, target quantity, destination market, supplier name, quotation details, and any documents already received.</span>
+        </div>
       </div>
     </section>
 
@@ -32,51 +39,94 @@
         <form class="contact-form" id="contact-form" action="mailto:info@trillions.ae" method="post" enctype="text/plain">
           <div class="form-head">
             <p class="eyebrow">Inquiry details</p>
-            <h2>Tell us what you want to source.</h2>
-            <p>Use whatever information you have now. Product links, quotation notes, and destination details help us respond with the right next step.</p>
+            <h2>Choose what you want to send.</h2>
+            <p>Use the option that best matches your request. If you are unsure, choose sourcing inquiry and describe what you already have.</p>
           </div>
+
+          <fieldset class="request-type-field">
+            <legend>Request type</legend>
+            <div class="request-type-options">
+              <label class="request-option">
+                <input type="radio" name="type" value="Sourcing inquiry" checked>
+                <span><strong>Sourcing inquiry</strong><small>Find suppliers for a product or category.</small></span>
+              </label>
+              <label class="request-option">
+                <input type="radio" name="type" value="Supplier quote review">
+                <span><strong>Supplier quote</strong><small>Compare a quotation, terms, or factory offer.</small></span>
+              </label>
+              <label class="request-option">
+                <input type="radio" name="type" value="Product idea review">
+                <span><strong>Product idea</strong><small>Shape an idea into supplier questions.</small></span>
+              </label>
+              <label class="request-option">
+                <input type="radio" name="type" value="Private-label request">
+                <span><strong>Private label</strong><small>Prepare branding, packaging, and sample needs.</small></span>
+              </label>
+            </div>
+          </fieldset>
 
           <div class="form-grid">
             <label>Full name<input name="name" type="text" required placeholder="Your name"></label>
             <label>Email<input name="email" type="email" required placeholder="name@example.com"></label>
-            <label>Phone or WhatsApp<input name="phone" type="tel" placeholder="Optional"></label>
+            <label>Phone or WhatsApp<input name="phone" type="tel" placeholder="Optional, but helpful"></label>
             <label>Destination market<input name="market" type="text" placeholder="UAE, Saudi Arabia, Qatar..."></label>
-            <label>Inquiry type<select name="type"><option>Supplier sourcing</option><option>Private label</option><option>Quotation comparison</option><option>Import coordination</option><option>Other</option></select></label>
+            <label>Product or category<input name="product" type="text" required placeholder="Example: RC car, camping tent, diffuser"></label>
             <label>Target quantity<input name="quantity" type="text" placeholder="Example: 500 units"></label>
+            <label>Supplier or product link<input name="supplier_link" type="text" placeholder="Website, catalog, Alibaba link, or supplier name"></label>
+            <label>Target price or budget<input name="budget" type="text" placeholder="Optional target price or budget"></label>
+            <label>Request stage<select name="stage"><option>Idea or category research</option><option>Already found a supplier</option><option>Have a quotation to compare</option><option>Need private-label support</option><option>Preparing to order or import</option></select></label>
+            <label>Timeline<input name="timeline" type="text" placeholder="Example: this month, 30 days, flexible"></label>
           </div>
 
-          <label class="field-full">Message<textarea name="message" rows="6" required placeholder="Describe the product, supplier, target price, quantity, market, or documents you already have."></textarea></label>
+          <label class="field-full">Message<textarea name="message" rows="7" required placeholder="Describe the product, supplier quote, private-label idea, required documents, packaging needs, or questions you want Trillions to review."></textarea></label>
 
           <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Prepare email</button>
+            <button class="btn btn-primary" type="submit">Prepare inquiry email</button>
             <a class="btn btn-secondary" href="mailto:info@trillions.ae">Email directly</a>
           </div>
-          <p class="form-note">Your email app will open before anything is sent. No payment or commitment is required to start an inquiry.</p>
+          <p class="form-note">Your email app will open before anything is sent. You can attach quotes, photos, catalogs, or supplier files before sending.</p>
         </form>
 
         <aside class="contact-card">
-          <p class="eyebrow">Direct contact</p>
-          <h2>Send the essentials first.</h2>
-          <p>For faster review, include photos or links, target quantity, destination market, and any supplier quotation.</p>
+          <p class="eyebrow">What to send</p>
+          <h2>Start with the details that make sourcing easier.</h2>
+          <p>Clear information helps Trillions compare suppliers, ask better questions, and guide the next step for UAE and GCC buyers.</p>
 
           <div class="contact-methods">
             <a class="contact-method" href="mailto:info@trillions.ae"><strong>Email</strong><span>info@trillions.ae</span></a>
-            <a class="contact-method" href="assistant.html"><strong>Need help drafting?</strong><span>Use the AI assistant to organize your request.</span></a>
+            <a class="contact-method" href="assistant.html"><strong>Need help drafting?</strong><span>Use the AI assistant to organize your request first.</span></a>
           </div>
 
-          <h3>What to include</h3>
-          <ul>
-            <li>Product photos, catalog, or link</li>
-            <li>Target quantity and destination market</li>
-            <li>Supplier quotation, if available</li>
-            <li>Required certificates or documents</li>
-            <li>Delivery country and city</li>
-          </ul>
+          <div class="contact-topic-list">
+            <div><strong>Sourcing inquiry</strong><span>Product category, quantity, destination market, target price, and any reference links.</span></div>
+            <div><strong>Supplier quote</strong><span>Quotation, supplier name, MOQ, payment terms, lead time, warranty, and documents.</span></div>
+            <div><strong>Product idea</strong><span>Photos, customer use case, must-have features, packaging expectations, and budget.</span></div>
+            <div><strong>Private label</strong><span>Brand name, logo needs, packaging style, sample goals, and customization requirements.</span></div>
+          </div>
         </aside>
+      </div>
+
+      <div class="container contact-after">
+        <div class="fit-grid">
+          <div><strong>1. Send what you have</strong><span>A short brief, product link, quote, or supplier chat is enough to begin.</span></div>
+          <div><strong>2. Trillions reviews gaps</strong><span>We look for missing specs, unclear terms, supplier questions, and GCC readiness points.</span></div>
+          <div><strong>3. Decide the next step</strong><span>The next move may be supplier follow-up, quotation comparison, sample planning, or import coordination.</span></div>
+        </div>
       </div>
     </section>
   </main>
-  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a><p>Global sourcing, trading, and private-label support for GCC-focused businesses.</p><p>Email: <a href="mailto:info@trillions.ae">info@trillions.ae</a></p></div><div><h4>Company</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a></div><div><h4>Support</h4><a href="contact.html">Contact</a><a href="mailto:info@trillions.ae">info@trillions.ae</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div></div></footer>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="index.html"><span class="brand-mark">T</span><span>Trillions</span></a>
+        <p>Global sourcing, trading, and private-label support for GCC-focused businesses.</p>
+        <p>Email: <a href="mailto:info@trillions.ae">info@trillions.ae</a></p>
+      </div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="products.html">Products</a></div>
+      <div><h4>Support</h4><a href="contact.html">Contact</a><a href="mailto:info@trillions.ae">info@trillions.ae</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></div>
+    </div>
+  </footer>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
