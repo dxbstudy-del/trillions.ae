@@ -64,63 +64,56 @@ if (contactForm) {
   });
 }
 
+function setFormStatus(element, message, type) {
+  if (!element) return;
+  element.textContent = message;
+  element.className = `form-status visible ${type || 'info'}`;
+}
+
 const supplierForm = document.getElementById('supplier-form');
+const supplierFormStatus = document.getElementById('supplier-form-status');
 if (supplierForm) {
-  supplierForm.addEventListener('submit', (event) => {
+  supplierForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const form = new FormData(supplierForm);
-    const value = (name) => String(form.get(name) || '').trim();
-    const company = value('company');
-    const supplierType = value('supplier_type');
-    const countryCity = value('country_city');
-    const contactName = value('contact_name');
-    const email = value('email');
-    const phone = value('phone');
-    const website = value('website');
-    const categories = value('categories');
-    const moq = value('moq');
-    const leadTime = value('lead_time');
-    const paymentTerms = value('payment_terms');
-    const exportMarkets = value('export_markets');
-    const documents = value('documents');
-    const topProducts = value('top_products');
-    const address = value('address');
-    const message = value('message');
-    const subject = encodeURIComponent(`Trillions supplier registration from ${company || contactName || 'website supplier'}`);
-    const body = encodeURIComponent([
-      'Hello Trillions team,',
-      '',
-      'I would like to register our company for supplier review:',
-      '',
-      'Company details',
-      `Company name: ${company || 'Not provided'}`,
-      `Supplier type: ${supplierType || 'Not provided'}`,
-      `Country and city: ${countryCity || 'Not provided'}`,
-      `Factory or warehouse address: ${address || 'Not provided'}`,
-      '',
-      'Contact details',
-      `Contact person: ${contactName || 'Not provided'}`,
-      `Email: ${email || 'Not provided'}`,
-      `Phone or WhatsApp: ${phone || 'Not provided'}`,
-      `Website or catalog link: ${website || 'Not provided'}`,
-      '',
-      'Product and commercial details',
-      `Product categories: ${categories || 'Not provided'}`,
-      `Top products: ${topProducts || 'Not provided'}`,
-      `MOQ range: ${moq || 'Not provided'}`,
-      `Lead time: ${leadTime || 'Not provided'}`,
-      `Payment terms: ${paymentTerms || 'Not provided'}`,
-      `Export markets: ${exportMarkets || 'Not provided'}`,
-      `Documents available: ${documents || 'Not provided'}`,
-      '',
-      'Why buyers should consider us',
-      message || 'Not provided',
-      '',
-      'We understand registration does not guarantee approval, verification, buyer orders, or public listing.',
-      '',
-      'Thank you.'
-    ].join('\n'));
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    const submitButton = supplierForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton ? submitButton.textContent : '';
+    const payload = Object.fromEntries(new FormData(supplierForm).entries());
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+    }
+    setFormStatus(supplierFormStatus, 'Sending supplier registration to Trillions...', 'info');
+
+    try {
+      const response = await fetch('/api/supplier-registration.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      let data = {};
+      try {
+        data = await response.json();
+      } catch (error) {
+        data = {};
+      }
+      if (!response.ok) {
+        throw new Error(data.reply || 'The supplier registration could not be sent. Please email info@trillions.ae directly.');
+      }
+      setFormStatus(supplierFormStatus, data.reply || 'Supplier registration sent to Trillions. Thank you.', 'success');
+      supplierForm.reset();
+    } catch (error) {
+      setFormStatus(
+        supplierFormStatus,
+        error.message || 'The supplier registration could not be sent. Please email info@trillions.ae directly.',
+        'error'
+      );
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
+    }
   });
 }
 

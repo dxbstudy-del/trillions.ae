@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/forms.css">
 </head>
 <body class="supplier-page contact-page services-page">
   <header class="site-header">
@@ -37,11 +38,11 @@
 
     <section class="section contact-section" id="register">
       <div class="container contact-grid">
-        <form class="contact-form" id="supplier-form" action="mailto:info@trillions.ae" method="post" enctype="text/plain">
+        <form class="contact-form" id="supplier-form" action="/api/supplier-registration.php" method="post">
           <div class="form-head">
             <p class="eyebrow">Supplier details</p>
             <h2>Submit your company for review.</h2>
-            <p>This form creates a structured email. You can attach catalogs, product photos, certificates, or company documents before sending.</p>
+            <p>Complete the form and Trillions will receive the supplier registration directly by email. For catalogs, certificates, or product photos, include public links in the form or email them separately.</p>
           </div>
 
           <fieldset class="request-type-field">
@@ -86,9 +87,10 @@
           <label class="field-full">Why should buyers consider your company?<textarea name="message" rows="6" placeholder="Mention production strengths, quality control, private-label ability, export experience, stock availability, or product advantages."></textarea></label>
 
           <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Prepare supplier registration email</button>
+            <button class="btn btn-primary" type="submit">Submit supplier registration</button>
             <a class="btn btn-secondary" href="mailto:info@trillions.ae">Email directly</a>
           </div>
+          <p class="form-status" id="supplier-form-status" role="status" aria-live="polite"></p>
           <p class="form-note">Registration does not guarantee approval, verification, buyer orders, or public listing. Trillions reviews submitted supplier information before using it in sourcing work.</p>
         </form>
 

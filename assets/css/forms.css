@@ -1,0 +1,14 @@
+.form-status{
+  display:none;
+  margin:0;
+  border-radius:12px;
+  padding:12px 14px;
+  font-size:.92rem;
+  font-weight:700;
+  line-height:1.45;
+}
+.form-status.visible{display:block}
+.form-status.info{background:#eef4ff;color:#0747a6}
+.form-status.success{background:#ecfdf3;color:#027a48}
+.form-status.error{background:#fff1f3;color:#b42318}
+.btn:disabled{cursor:not-allowed;opacity:.68;box-shadow:none}
