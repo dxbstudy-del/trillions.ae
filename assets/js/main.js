@@ -64,6 +64,66 @@ if (contactForm) {
   });
 }
 
+const supplierForm = document.getElementById('supplier-form');
+if (supplierForm) {
+  supplierForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = new FormData(supplierForm);
+    const value = (name) => String(form.get(name) || '').trim();
+    const company = value('company');
+    const supplierType = value('supplier_type');
+    const countryCity = value('country_city');
+    const contactName = value('contact_name');
+    const email = value('email');
+    const phone = value('phone');
+    const website = value('website');
+    const categories = value('categories');
+    const moq = value('moq');
+    const leadTime = value('lead_time');
+    const paymentTerms = value('payment_terms');
+    const exportMarkets = value('export_markets');
+    const documents = value('documents');
+    const topProducts = value('top_products');
+    const address = value('address');
+    const message = value('message');
+    const subject = encodeURIComponent(`Trillions supplier registration from ${company || contactName || 'website supplier'}`);
+    const body = encodeURIComponent([
+      'Hello Trillions team,',
+      '',
+      'I would like to register our company for supplier review:',
+      '',
+      'Company details',
+      `Company name: ${company || 'Not provided'}`,
+      `Supplier type: ${supplierType || 'Not provided'}`,
+      `Country and city: ${countryCity || 'Not provided'}`,
+      `Factory or warehouse address: ${address || 'Not provided'}`,
+      '',
+      'Contact details',
+      `Contact person: ${contactName || 'Not provided'}`,
+      `Email: ${email || 'Not provided'}`,
+      `Phone or WhatsApp: ${phone || 'Not provided'}`,
+      `Website or catalog link: ${website || 'Not provided'}`,
+      '',
+      'Product and commercial details',
+      `Product categories: ${categories || 'Not provided'}`,
+      `Top products: ${topProducts || 'Not provided'}`,
+      `MOQ range: ${moq || 'Not provided'}`,
+      `Lead time: ${leadTime || 'Not provided'}`,
+      `Payment terms: ${paymentTerms || 'Not provided'}`,
+      `Export markets: ${exportMarkets || 'Not provided'}`,
+      `Documents available: ${documents || 'Not provided'}`,
+      '',
+      'Why buyers should consider us',
+      message || 'Not provided',
+      '',
+      'We understand registration does not guarantee approval, verification, buyer orders, or public listing.',
+      '',
+      'Thank you.'
+    ].join('\n'));
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  });
+}
+
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
 const chatLog = document.getElementById('chat-log');
