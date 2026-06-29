@@ -7,6 +7,23 @@ function send_reply($status, $reply) {
     exit;
 }
 
+function read_openai_api_key() {
+    $apiKey = getenv('OPENAI_API_KEY');
+    if (is_string($apiKey) && trim($apiKey) !== '') {
+        return trim($apiKey);
+    }
+
+    $privateConfigPath = dirname(__DIR__, 2) . '/private/openai.php';
+    if (is_readable($privateConfigPath)) {
+        $config = require $privateConfigPath;
+        if (is_array($config) && isset($config['OPENAI_API_KEY']) && is_string($config['OPENAI_API_KEY'])) {
+            return trim($config['OPENAI_API_KEY']);
+        }
+    }
+
+    return '';
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     send_reply(405, 'Method not allowed.');
 }
@@ -18,9 +35,13 @@ if ($message === '') {
     send_reply(400, 'Please enter a message.');
 }
 
-$apiKey = getenv('OPENAI_API_KEY');
+if (strlen($message) > 4000) {
+    send_reply(400, 'Please shorten your message and try again.');
+}
+
+$apiKey = read_openai_api_key();
 if (!$apiKey) {
-    send_reply(503, 'The Trillions AI assistant is temporarily unavailable. Please use the contact page to send your sourcing inquiry.');
+    send_reply(503, 'The Trillions AI assistant is not connected yet. Please use the contact page to send your sourcing inquiry.');
 }
 
 $payload = [
