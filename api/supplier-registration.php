@@ -40,8 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     send_reply(405, 'Method not allowed.');
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
+$rawInput = file_get_contents('php://input');
+$input = json_decode($rawInput, true);
 if (!is_array($input)) {
+    $input = $_POST;
+}
+if (!is_array($input) || count($input) === 0) {
     send_reply(400, 'Invalid request. Please try again.');
 }
 
