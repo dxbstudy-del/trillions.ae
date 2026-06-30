@@ -11,6 +11,30 @@ function whatsappUrl(message = DEFAULT_WHATSAPP_MESSAGE) {
   return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
 
+function hidePricingForNow() {
+  document.querySelectorAll('a[href="pricing.html"]').forEach((link) => {
+    const parentListItem = link.closest('li');
+    if (parentListItem) {
+      parentListItem.remove();
+      return;
+    }
+    link.remove();
+  });
+
+  document.querySelectorAll('.price, .price-card').forEach((node) => {
+    node.remove();
+  });
+
+  document.querySelectorAll('p').forEach((paragraph) => {
+    const text = paragraph.textContent || '';
+    if (/Starting fee:|AED\s|Custom quote/i.test(text)) {
+      paragraph.remove();
+    }
+  });
+}
+
+hidePricingForNow();
+
 const navToggle = document.querySelector('.nav-toggle');
 const siteNav = document.querySelector('.site-nav');
 
