@@ -3,6 +3,12 @@ if (window.location.protocol === 'http:') {
 }
 
 const CONTACT_EMAIL = 'info@trillions.ae';
+const WHATSAPP_NUMBER = '+971500000000';
+
+function whatsappUrl(message) {
+  const phone = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
 
 const navToggle = document.querySelector('.nav-toggle');
 const siteNav = document.querySelector('.site-nav');
@@ -13,6 +19,31 @@ if (navToggle && siteNav) {
     navToggle.setAttribute('aria-expanded', String(isOpen));
   });
 }
+
+document.querySelectorAll('a[href="https://wa.me/971500000000"]').forEach((link) => {
+  const pageTitle = document.title.replace(/\s*\|\s*Trillions.*/, '').trim() || 'Trillions';
+  link.href = whatsappUrl(`Hello Trillions, I would like help with ${pageTitle}.`);
+  link.target = '_blank';
+  link.rel = 'noopener';
+});
+
+const floatingStyle = document.createElement('style');
+floatingStyle.textContent = `
+  .floating-whatsapp{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 18px;border-radius:999px;background:#128c7e;color:#fff;font-weight:800;box-shadow:0 18px 36px rgba(16,24,40,.22);border:1px solid rgba(255,255,255,.35)}
+  .floating-whatsapp:hover,.floating-whatsapp:focus-visible{background:#0f6f65;outline:none;transform:translateY(-1px)}
+  .floating-whatsapp span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:rgba(255,255,255,.18)}
+  @media(max-width:620px){.floating-whatsapp{left:14px;right:14px;bottom:14px;justify-content:center}.site-footer{padding-bottom:92px}}
+`;
+document.head.appendChild(floatingStyle);
+
+const floatingWhatsapp = document.createElement('a');
+floatingWhatsapp.className = 'floating-whatsapp';
+floatingWhatsapp.href = whatsappUrl('Hello Trillions, I would like help reviewing a supplier, quote, product link, or private-label request.');
+floatingWhatsapp.target = '_blank';
+floatingWhatsapp.rel = 'noopener';
+floatingWhatsapp.setAttribute('aria-label', 'Contact Trillions on WhatsApp');
+floatingWhatsapp.innerHTML = '<span aria-hidden="true">WA</span><span>WhatsApp</span>';
+document.body.appendChild(floatingWhatsapp);
 
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
@@ -32,11 +63,11 @@ if (contactForm) {
     const stage = value('stage');
     const timeline = value('timeline');
     const message = value('message');
-    const subject = encodeURIComponent(`Trillions ${type || 'sourcing'} from ${name || 'website visitor'}`);
+    const subject = encodeURIComponent(`Trillions ${type || 'sourcing request'} from ${name || 'website visitor'}`);
     const body = encodeURIComponent([
       'Hello Trillions team,',
       '',
-      'I would like support with the following sourcing request:',
+      'I would like sourcing support with the following request:',
       '',
       'Contact details',
       `Name: ${name || 'Not provided'}`,
@@ -56,7 +87,7 @@ if (contactForm) {
       'Message',
       message || 'Not provided',
       '',
-      'I can attach any photos, quotes, catalogs, or supplier documents to this email before sending.',
+      'I can attach photos, quotes, catalogs, certificates, packing details, or supplier documents to this email before sending.',
       '',
       'Thank you.'
     ].join('\n'));
