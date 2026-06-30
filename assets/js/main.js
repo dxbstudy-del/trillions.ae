@@ -4,8 +4,9 @@ if (window.location.protocol === 'http:') {
 
 const CONTACT_EMAIL = 'info@trillions.ae';
 const WHATSAPP_NUMBER = '+971500000000';
+const DEFAULT_WHATSAPP_MESSAGE = 'Hello Trillions, I want to check a supplier or quotation.';
 
-function whatsappUrl(message) {
+function whatsappUrl(message = DEFAULT_WHATSAPP_MESSAGE) {
   const phone = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
   return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
@@ -20,78 +21,95 @@ if (navToggle && siteNav) {
   });
 }
 
-document.querySelectorAll('a[href="https://wa.me/971500000000"]').forEach((link) => {
-  const pageTitle = document.title.replace(/\s*\|\s*Trillions.*/, '').trim() || 'Trillions';
-  link.href = whatsappUrl(`Hello Trillions, I would like help with ${pageTitle}.`);
+document.querySelectorAll('[data-whatsapp], a[href="https://wa.me/971500000000"]').forEach((link) => {
+  const message = link.getAttribute('data-whatsapp') || DEFAULT_WHATSAPP_MESSAGE;
+  link.href = whatsappUrl(message);
   link.target = '_blank';
   link.rel = 'noopener';
 });
 
-const floatingStyle = document.createElement('style');
-floatingStyle.textContent = `
-  .floating-whatsapp{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 18px;border-radius:999px;background:#128c7e;color:#fff;font-weight:800;box-shadow:0 18px 36px rgba(16,24,40,.22);border:1px solid rgba(255,255,255,.35)}
-  .floating-whatsapp:hover,.floating-whatsapp:focus-visible{background:#0f6f65;outline:none;transform:translateY(-1px)}
-  .floating-whatsapp span:first-child{display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:rgba(255,255,255,.18)}
-  @media(max-width:620px){.floating-whatsapp{left:14px;right:14px;bottom:14px;justify-content:center}.site-footer{padding-bottom:92px}}
-`;
-document.head.appendChild(floatingStyle);
-
 const floatingWhatsapp = document.createElement('a');
 floatingWhatsapp.className = 'floating-whatsapp';
-floatingWhatsapp.href = whatsappUrl('Hello Trillions, I would like help reviewing a supplier, quote, product link, or private-label request.');
+floatingWhatsapp.href = whatsappUrl(DEFAULT_WHATSAPP_MESSAGE);
 floatingWhatsapp.target = '_blank';
 floatingWhatsapp.rel = 'noopener';
 floatingWhatsapp.setAttribute('aria-label', 'Contact Trillions on WhatsApp');
 floatingWhatsapp.innerHTML = '<span aria-hidden="true">WA</span><span>WhatsApp</span>';
 document.body.appendChild(floatingWhatsapp);
 
+function formValue(form, name) {
+  return String(new FormData(form).get(name) || '').trim();
+}
+
+function openMailto(subject, lines) {
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+}
+
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const form = new FormData(contactForm);
-    const value = (name) => String(form.get(name) || '').trim();
-    const name = value('name');
-    const email = value('email');
-    const phone = value('phone');
-    const type = value('type');
-    const market = value('market');
-    const product = value('product');
-    const quantity = value('quantity');
-    const supplierLink = value('supplier_link');
-    const budget = value('budget');
-    const stage = value('stage');
-    const timeline = value('timeline');
-    const message = value('message');
-    const subject = encodeURIComponent(`Trillions ${type || 'sourcing request'} from ${name || 'website visitor'}`);
-    const body = encodeURIComponent([
+    const type = formValue(contactForm, 'type');
+    const name = formValue(contactForm, 'name');
+    openMailto(`Trillions ${type || 'sourcing request'} from ${name || 'website visitor'}`, [
       'Hello Trillions team,',
       '',
-      'I would like sourcing support with the following request:',
+      'I would like support with the following request:',
       '',
-      'Contact details',
-      `Name: ${name || 'Not provided'}`,
-      `Email: ${email || 'Not provided'}`,
-      `Phone or WhatsApp: ${phone || 'Not provided'}`,
-      '',
-      'Inquiry details',
       `Request type: ${type || 'Not provided'}`,
-      `Request stage: ${stage || 'Not provided'}`,
-      `Product or category: ${product || 'Not provided'}`,
-      `Destination market: ${market || 'Not provided'}`,
-      `Target quantity: ${quantity || 'Not provided'}`,
-      `Target price or budget: ${budget || 'Not provided'}`,
-      `Timeline: ${timeline || 'Not provided'}`,
-      `Supplier or product link: ${supplierLink || 'Not provided'}`,
+      `Name: ${name || 'Not provided'}`,
+      `Email: ${formValue(contactForm, 'email') || 'Not provided'}`,
+      `Phone or WhatsApp: ${formValue(contactForm, 'phone') || 'Not provided'}`,
+      `Destination market: ${formValue(contactForm, 'market') || 'Not provided'}`,
+      `Product or category: ${formValue(contactForm, 'product') || 'Not provided'}`,
+      `Target quantity: ${formValue(contactForm, 'quantity') || 'Not provided'}`,
+      `Supplier or product link: ${formValue(contactForm, 'supplier_link') || 'Not provided'}`,
+      `Target price or budget: ${formValue(contactForm, 'budget') || 'Not provided'}`,
+      `Request stage: ${formValue(contactForm, 'stage') || 'Not provided'}`,
+      `Timeline: ${formValue(contactForm, 'timeline') || 'Not provided'}`,
       '',
       'Message',
-      message || 'Not provided',
+      formValue(contactForm, 'message') || 'Not provided',
       '',
-      'I can attach photos, quotes, catalogs, certificates, packing details, or supplier documents to this email before sending.',
+      'I can attach files by email or send them through WhatsApp after submitting this request.',
       '',
       'Thank you.'
-    ].join('\n'));
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    ]);
+  });
+}
+
+const supplierForm = document.getElementById('supplier-form');
+if (supplierForm) {
+  supplierForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const company = formValue(supplierForm, 'company');
+    openMailto(`Supplier registration for Trillions: ${company || 'New supplier'}`, [
+      'Hello Trillions team,',
+      '',
+      'Please review this supplier registration:',
+      '',
+      `Company name: ${company || 'Not provided'}`,
+      `Country and city: ${formValue(supplierForm, 'country_city') || 'Not provided'}`,
+      `Factory or trading company: ${formValue(supplierForm, 'supplier_type') || 'Not provided'}`,
+      `Product categories: ${formValue(supplierForm, 'categories') || 'Not provided'}`,
+      `MOQ: ${formValue(supplierForm, 'moq') || 'Not provided'}`,
+      `Lead time: ${formValue(supplierForm, 'lead_time') || 'Not provided'}`,
+      `Payment terms: ${formValue(supplierForm, 'payment_terms') || 'Not provided'}`,
+      `Export markets: ${formValue(supplierForm, 'export_markets') || 'Not provided'}`,
+      `Certificates: ${formValue(supplierForm, 'documents') || 'Not provided'}`,
+      `Catalog link: ${formValue(supplierForm, 'catalog_link') || 'Not provided'}`,
+      `Website: ${formValue(supplierForm, 'website') || 'Not provided'}`,
+      `WhatsApp: ${formValue(supplierForm, 'whatsapp') || formValue(supplierForm, 'phone') || 'Not provided'}`,
+      `Contact person: ${formValue(supplierForm, 'contact_name') || 'Not provided'}`,
+      '',
+      'Top products',
+      formValue(supplierForm, 'top_products') || 'Not provided',
+      '',
+      'Message',
+      formValue(supplierForm, 'message') || 'Not provided',
+      '',
+      'Supplier registration does not mean automatic verification, endorsement, or approval by Trillions.'
+    ]);
   });
 }
 
@@ -99,53 +117,6 @@ function setFormStatus(element, message, type) {
   if (!element) return;
   element.textContent = message;
   element.className = `form-status visible ${type || 'info'}`;
-}
-
-const supplierForm = document.getElementById('supplier-form');
-const supplierFormStatus = document.getElementById('supplier-form-status');
-if (supplierForm) {
-  supplierForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const submitButton = supplierForm.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton ? submitButton.textContent : '';
-    const payload = Object.fromEntries(new FormData(supplierForm).entries());
-
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending...';
-    }
-    setFormStatus(supplierFormStatus, 'Sending supplier registration to Trillions...', 'info');
-
-    try {
-      const response = await fetch('/api/supplier-registration.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      let data = {};
-      try {
-        data = await response.json();
-      } catch (error) {
-        data = {};
-      }
-      if (!response.ok) {
-        throw new Error(data.reply || 'The supplier registration could not be sent. Please email info@trillions.ae directly.');
-      }
-      setFormStatus(supplierFormStatus, data.reply || 'Supplier registration sent to Trillions. Thank you.', 'success');
-      supplierForm.reset();
-    } catch (error) {
-      setFormStatus(
-        supplierFormStatus,
-        error.message || 'The supplier registration could not be sent. Please email info@trillions.ae directly.',
-        'error'
-      );
-    } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
-      }
-    }
-  });
 }
 
 const chatForm = document.getElementById('chat-form');
@@ -188,11 +159,7 @@ if (chatForm && chatInput && chatLog) {
         body: JSON.stringify({ message })
       });
       let data = {};
-      try {
-        data = await response.json();
-      } catch (error) {
-        data = {};
-      }
+      try { data = await response.json(); } catch (error) { data = {}; }
       if (!response.ok) {
         throw new Error(data.reply || 'The assistant is temporarily unavailable. Please try again later.');
       }
